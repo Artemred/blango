@@ -12,7 +12,7 @@
         {{ post.content|safe }}
     </div>
 </div>
-
+{% include "post-comments.html" %}
 {% row %}
     {% col %}
         {% recent_posts post %}
