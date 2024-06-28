@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import CommentForm
 from django.shortcuts import render, get_object_or_404
+import logging
+logger = logging.getLogger(__name__)
 
 
 def index(request):
     posts = Post.objects.all()
+    logger.debug("Got %d posts", len(posts))
     return render(request, "index.html", {"posts": posts})
 
 
@@ -25,4 +28,7 @@ def post_detail(request, slug):
             comment_form = CommentForm()
     else:
         comment_form = None
+    logger.info(
+    "Created comment on Post %d for user %s", post.pk, request.user
+)
     return render(request, "post-detail.html", {"post": post, "comment_form":comment_form})
