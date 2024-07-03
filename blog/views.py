@@ -7,7 +7,11 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = (
+      Post.objects.all()
+      .select_related("author")
+      .defer("created_at", "modified_at")
+    )
     logger.debug("Got %d posts", len(posts))
     return render(request, "index.html", {"posts": posts})
 
@@ -32,3 +36,7 @@ def post_detail(request, slug):
     "Created comment on Post %d for user %s", post.pk, request.user
 )
     return render(request, "post-detail.html", {"post": post, "comment_form":comment_form})
+
+def get_ip(request):
+  from django.http import HttpResponse
+  return HttpResponse(request.META['REMOTE_ADDR'])
