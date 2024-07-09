@@ -6,6 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def post_table(request):
+    return render(request, "post-table.html")
+
 def index(request):
     posts = (
       Post.objects.all()
