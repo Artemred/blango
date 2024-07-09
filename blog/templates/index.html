@@ -5,6 +5,9 @@
     {% for post in posts %}
     {%row%}
         <div class="col">
+            {% if post.hero_image %}
+                <img src="{{ post.hero_image.thumbnail.100x100.url }}"/>
+            {% endif %}
             <h3>{{ post.title }}</h3>
             {%include "post-byline.html"%}
             <p>{{ post.summary }}</p>
